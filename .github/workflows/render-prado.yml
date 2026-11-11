@@ -1,0 +1,44 @@
+name: Render Prado 4K
+on:
+  workflow_dispatch:
+    inputs:
+      quality:
+        description: Render quality
+        type: choice
+        options: ['1080p','4K']
+        default: '4K'
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Check original images
+        run: |
+          for file in front.jpg angle.jpg interior.jpg rear.jpg; do
+            test -s "public/$file" || { echo "::error::Missing public/$file"; exit 1; }
+          done
+      - name: Generate original cinematic audio
+        run: python3 scripts/make_audio.py
+      - name: Ensure browser
+        run: npx remotion browser ensure
+      - name: Render MP4
+        env:
+          QUALITY: ${{ inputs.quality }}
+        run: |
+          if [ "$QUALITY" = "4K" ]; then
+            npx remotion render src/index.ts Prado out/prado-4k.mp4 --width=2160 --height=3840 --codec=h264 --crf=20 --concurrency=1
+          else
+            npx remotion render src/index.ts Prado out/prado-1080p.mp4 --codec=h264 --crf=18 --concurrency=2
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prado-cinematic-${{ inputs.quality }}
+          path: out/*.mp4
+          retention-days: 7

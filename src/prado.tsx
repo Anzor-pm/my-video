@@ -9,7 +9,7 @@ const scenes=[
 ];
 const gold='#e4c48a';
 const Shot:React.FC<{file:string;a:number;b:number;title:string;subtitle:string;i:number}>=({file,a,b,title,subtitle,i})=>{
- const frame=useCurrentFrame();const {fps}=useVideoConfig();const t=frame-a;
+ const frame=useCurrentFrame()/4;const fps=30;const t=frame-a;
  const opacity=interpolate(frame,[a,a+12,b-12,b],[0,1,1,0],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
  const zoom=interpolate(t,[0,b-a],[1.05,1.2],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
  const move=interpolate(t,[0,b-a],[i%2?20:-20,i%2?-20:20]);
@@ -25,7 +25,7 @@ const Shot:React.FC<{file:string;a:number;b:number;title:string;subtitle:string;
  </AbsoluteFill>;
 };
 export const Prado:React.FC=()=>{
- const f=useCurrentFrame();const {fps}=useVideoConfig();
+ const f=useCurrentFrame()/4;const fps=30;
  const priceIn=spring({frame:f-455,fps,config:{damping:13,stiffness:70}});
  return <AbsoluteFill style={{background:'#050708',overflow:'hidden'}}>
   <Soundtrack/>

@@ -1,5 +1,7 @@
 import React from 'react';
 import {Soundtrack} from './audio';
+import {GlassCaption} from './glass-caption';
+import {captions} from './captions';
 import {AbsoluteFill,Img,interpolate,spring,staticFile,useCurrentFrame,useVideoConfig} from 'remotion';
 const scenes=[
  {file:'front.jpg',a:0,b:110,title:'LAND CRUISER',subtitle:'PRADO'},
@@ -29,6 +31,7 @@ export const Prado:React.FC=()=>{
  const priceIn=spring({frame:f-455,fps,config:{damping:13,stiffness:70}});
  return <AbsoluteFill style={{background:'#050708',overflow:'hidden'}}>
   <Soundtrack/>
+  {captions.map((caption,i)=><GlassCaption key={i} {...caption}/>)}
   {scenes.map((s,i)=><Shot key={s.file} {...s} i={i}/>)}
   {f>=450?<AbsoluteFill style={{background:'radial-gradient(circle at center,#26343b,#020304 75%)',justifyContent:'center',alignItems:'center',fontFamily:'Arial',color:'white'}}>
    <div style={{fontSize:34,letterSpacing:12,color:gold}}>TOYOTA</div>

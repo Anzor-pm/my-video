@@ -1,6 +1,6 @@
 # Toyota Prado — Remotion cinematic ad
 
-20-second vertical ad, 30 fps. Remotion source in `src/`. Price: **210 000 сомонӣ**.
+20-second vertical ad, 120 fps. Remotion source in `src/`. Price: **210 000 сомонӣ**.
 
 ## Required original photos
 Upload to `public/`:

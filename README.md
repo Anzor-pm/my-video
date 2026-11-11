@@ -1,6 +1,5 @@
-# Prado Remotion Studio
+# Remotion Studio
 
-20-second Toyota Prado VX Limited advertisement, price **210 000 сомонӣ**.
 
 Run in Codespaces: `npm install` then `npm start`.
 
